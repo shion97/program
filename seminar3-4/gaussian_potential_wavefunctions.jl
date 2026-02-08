@@ -12,8 +12,8 @@ function calc_vq(q, ξ)
     return sqrt(π * ξ^2) * exp(-q^2 * ξ^2 / 4)
 end
 
-#Vnmの計算
-function calc_Vkkp(k, kp, L, ξ, x0, V0)
+#Vmnの計算
+function calc_Vmn(k, kp, L, ξ, x0, V0)
     q1 = k - kp
     q2 = k + kp
     vq1 = calc_vq(q1, ξ)
@@ -30,7 +30,7 @@ function make_H(N, L, ξ, x0, V0)
         for m in 1:N
             kp = m * π / L
             H[n, m] = (n == m ? k^2 : 0.0) +
-                      calc_Vkkp(k, kp, L, ξ, x0, V0)
+                      calc_Vmn(k, kp, L, ξ, x0, V0)
         end
     end
     return H
