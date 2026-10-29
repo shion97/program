@@ -4,32 +4,80 @@ using Printf
 using Plots
 
 # =============== 計算設定（ここを編集） ===============
-L = 40
-t = 1.0
-U = 4.0
-m = 20                # N_up=m, N_down=L-m （0 <= m <= L）
+# パラメータ
+L = 50                # 電子数
+t = 1.0                # ホッピング積分
+U = 4.0               # オンサイト相互作用
+m = 25                # N_up=m, N_down=L-m （0 <= m <= L）
 N_up = m
 N_down = L - m
 
-initial_mode = :manual  # :manual か :load を選ぶ
-input_csv = "density_checkpoint.csv"
+# ファイルの扱い
+initial_mode = :load  # :manual か :load を選ぶ
+input_csv = "results_vault/反強磁性/density_checkpoint.csv"    # pathは相対pathで入力
 output_csv = "density_checkpoint.csv"
+result_dir_name = nothing
 
-mixing = 0.25
-tol = 1e-10
-maxiter = 10_000
+# 計算の設定
+mixing = 0.25   # 密度混合割合
+tol = 1e-10   # 収束判定 
+maxiter = 10_000    # 最大反復回数
 
 # png出力ファイル名
 energy_plot_file = "scf_energy.png"
 residual_plot_file = "scf_residual.png"
-density_plot_file = "final_density.png"
+orbital_plot_file = "final_orbital_energies.png"
 mag_plot_file = "final_magnetization.png"
+report_file = "uhf_results.txt"
+
+# ===========================================
 
 # =============== 入出力用補助 ===============
-# Julia実行時のカレントディレクトリ配下の outputs に読込・保存を統一
-output_dir = joinpath(pwd(), "outputs")
-mkpath(output_dir)  # outputs が存在しなければ作成する
-abs_path(name::AbstractString) = joinpath(output_dir, basename(name))
+function result_directory()
+    result_dir_name === nothing && return joinpath(pwd(), "outputs")
+    result_dir_name isa AbstractString || error("result_dir_nameはnothingまたはフォルダ名にしてください")
+    (!isempty(result_dir_name) && result_dir_name ∉ (".", "..") &&
+     !occursin(r"[\\/:]", result_dir_name)) || error("result_dir_nameには区切り文字を含まないフォルダ名を指定してください")
+    return joinpath(pwd(), "results_vault", result_dir_name)
+end
+
+abs_path(name::AbstractString) = joinpath(result_directory(), basename(name))
+
+function print_result(message::AbstractString, report_io)
+    print(stdout, message)
+    if report_io !== nothing
+        print(report_io, message)
+        flush(report_io)
+    end
+end
+
+function write_initial_conditions(report_io)
+    println(report_io, "# パラメータ")
+    for (name, value) in (("L", L), ("t", t), ("U", U), ("m", m),
+                          ("N_up", N_up), ("N_down", N_down))
+        println(report_io, name, " = ", repr(value))
+    end
+    println(report_io, "\n# 計算の設定")
+    for (name, value) in (("mixing", mixing), ("tol", tol), ("maxiter", maxiter))
+        println(report_io, name, " = ", repr(value))
+    end
+    println(report_io, "\n# 初期電子密度")
+    println(report_io, "initial_mode = ", repr(initial_mode))
+    if initial_mode == :manual
+        source_lines = readlines(@__FILE__)
+        manual_start = findlast(==("    if initial_mode == :manual"), source_lines)
+        manual_start === nothing && error("記録するmanual分岐が見つかりません")
+        manual_end = findnext(==("    elseif initial_mode == :load"), source_lines, manual_start + 1)
+        manual_end === nothing && error("記録するmanual分岐の終端が見つかりません")
+        for line in source_lines[manual_start + 1:manual_end - 1]
+            println(report_io, replace(line, r"^        " => ""))
+        end
+    elseif initial_mode == :load
+        println(report_io, "input_csv = ", repr(relpath(abspath(input_csv), pwd())))
+    end
+    println(report_io, "\n# 計算結果")
+    flush(report_io)
+end
 
 # =============== 入力・計算用関数 ===============
 function validate_density(up, down, L, N_up, N_down)
@@ -86,7 +134,8 @@ function hf_energy(h0, U, eig_up, eig_down, dens_up, dens_down, input_up, input_
 end
 
 function solve_uhf(up_init, down_init, N_up, N_down;
-                   t=1.0, U=4.0, mixing=0.25, tol=1e-10, maxiter=10_000)
+                   t=1.0, U=4.0, mixing=0.25, tol=1e-10, maxiter=10_000,
+                   report_io=nothing)
     L = length(up_init)
     0 <= N_up <= L && 0 <= N_down <= L || error("各スピンの粒子数は0～L")
     N_up + N_down == L || error("half-fillingはN_up+N_down=L")
@@ -118,8 +167,8 @@ function solve_uhf(up_init, down_init, N_up, N_down;
         push!(energy_hist, E_total)
 
         iterations = k
-        @printf("iter=%5d  residual=%.3e  E=%.12f  E_kin=%.12f  E_int=%.12f\n",
-                k, residual, E_total, E_kin, E_int)
+        print_result(@sprintf("iter=%5d  residual=%.3e  E=%.12f  E_kin=%.12f  E_int=%.12f\n",
+                              k, residual, E_total, E_kin, E_int), report_io)
 
         if residual < tol
             up .= next_up
@@ -131,17 +180,18 @@ function solve_uhf(up_init, down_init, N_up, N_down;
         up .= (1-mixing) .* up .+ mixing .* next_up
         down .= (1-mixing) .* down .+ mixing .* next_down
     end
-    converged || error("SCFが収束しませんでした。mixingや初期密度を変更してください")
-
     final_up, final_down, eig_up, eig_down = output_density(h0, U, up, down, N_up, N_down)
     final_residual = max(maximum(abs.(final_up .- up)), maximum(abs.(final_down .- down)))
     E_total, E_kin, E_int = hf_energy(h0, U, eig_up, eig_down, final_up, final_down, up, down, N_up, N_down)
 
     return (
+        converged=converged,
         n_up=final_up,
         n_down=final_down,
         charge=final_up .+ final_down,
         magnetization=final_up .- final_down,
+        orbital_energies_up=eig_up.values,
+        orbital_energies_down=eig_down.values,
         energy=E_total,
         E_kin=E_kin,
         E_int=E_int,
@@ -153,7 +203,7 @@ function solve_uhf(up_init, down_init, N_up, N_down;
     )
 end
 
-function save_plots(result; energy_path, residual_path, density_path, mag_path)
+function save_plots(result; energy_path, residual_path, orbital_path, mag_path)
     sites = 1:length(result.n_up)
 
     p1 = plot(result.iter_hist, result.energy_hist;
@@ -167,12 +217,14 @@ function save_plots(result; energy_path, residual_path, density_path, mag_path)
         yscale=:log10)
     savefig(p2, residual_path)
 
-    p3 = plot(sites, result.n_up;
-        xlabel="Site i", ylabel="Density", label="n_up",
-        title="Final electron density", linewidth=2, marker=:circle)
-    plot!(p3, sites, result.n_down; label="n_down", linewidth=2, marker=:square)
-    plot!(p3, sites, result.charge; label="charge", linewidth=2, marker=:diamond)
-    savefig(p3, density_path)
+    orbitals = 1:length(result.orbital_energies_up)
+    p3 = plot(orbitals, result.orbital_energies_up;
+        xlabel="Orbital index (ascending energy)", ylabel="Orbital energy", label="Spin up",
+        title="Final orbital energies", linewidth=2, marker=:circle)
+    plot!(p3, orbitals, result.orbital_energies_down;
+        label="Spin down", linewidth=2, linestyle=:dash, marker=:square,
+        markercolor=:transparent)
+    savefig(p3, orbital_path)
 
     p4 = plot(sites, result.magnetization;
         xlabel="Site i", ylabel="m_i", label="m_i",
@@ -182,49 +234,66 @@ function save_plots(result; energy_path, residual_path, density_path, mag_path)
 end
 
 # =============== 実行部分：最初にif文で入力方法を選ぶ ===============
-0 <= m <= L || error("mは0～Lにしてください")
+function run_calculation(report_io)
+    0 <= m <= L || error("mは0～Lにしてください")
+    write_initial_conditions(report_io)
 
-if initial_mode == :manual
-    # 手動指定：以下の2配列を任意の形に変更できます。
-    # デフォルトはN_up=m、N_down=L-mを満たす交代磁化の微小な種です。
-    
-    up_base = N_up / L
-    down_base = N_down / L
-    amplitude = 0.2 * min(up_base, 1-up_base, down_base, 1-down_base)
-    up0 = [up_base + amplitude * (-1)^i for i in 1:L]
-    down0 = [down_base - amplitude * (-1)^i for i in 1:L]
-    
-    up0[5:30], down0[5:30] =copy(down0[5:30]), copy(up0[5:30])
+    if initial_mode == :manual
+        # 手動指定：以下の2配列を任意の形に変更できます。
+        
+        up_base = N_up / L
+        down_base = N_down / L
+        amplitude = 0.2 * min(up_base, 1-up_base, down_base, 1-down_base)
+        up0 = [up_base + amplitude * (-1)^i for i in 1:L]
+        down0 = [down_base - amplitude * (-1)^i for i in 1:L]
+        
+        #up0[5:30], down0[5:30] =copy(down0[5:30]), copy(up0[5:30])
 
-    #up0 = [0.5 for _ in 1:L]
-    #down0 = [0.5 for _ in 1:L]
+        #up0 = [0.5 for _ in 1:L]
+        #down0 = [0.5 for _ in 1:L]
 
-elseif initial_mode == :load
-    up0, down0 = load_density(abs_path(input_csv), L)
-else
-    error("initial_modeは:manualまたは:loadにしてください")
+    elseif initial_mode == :load
+        up0, down0 = load_density(abspath(input_csv), L)
+    else
+        error("initial_modeは:manualまたは:loadにしてください")
+    end
+
+    validate_density(up0, down0, L, N_up, N_down)
+    result = solve_uhf(up0, down0, N_up, N_down;
+                       t=t, U=U, mixing=mixing, tol=tol, maxiter=maxiter,
+                       report_io=report_io)
+
+    print_result(@sprintf("\nN_up=%d N_down=%d  N_total=%d\n", N_up, N_down, N_up+N_down), report_io)
+    print_result("converged=$(result.converged)\n", report_io)
+    if !result.converged
+        print_result("SCFは最大反復回数に達しても未収束です。最後の混合密度から再評価した結果を保存します。\n", report_io)
+    end
+    print_result(@sprintf("iterations=%d  residual=%.3e  E=%.12f\n",
+                         result.iterations, result.residual, result.energy), report_io)
+    print_result(@sprintf("E_kin=%.12f  E_int=%.12f\n", result.E_kin, result.E_int), report_io)
+    print_result(@sprintf("sum(up)=%.10f  sum(down)=%.10f\n", sum(result.n_up), sum(result.n_down)), report_io)
+
+    save_density(abs_path(output_csv), result.n_up, result.n_down)
+    save_plots(result;
+        energy_path=abs_path(energy_plot_file),
+        residual_path=abs_path(residual_plot_file),
+        orbital_path=abs_path(orbital_plot_file),
+        mag_path=abs_path(mag_plot_file),
+    )
+
+    for filename in (output_csv, energy_plot_file, residual_plot_file, orbital_plot_file, mag_plot_file, report_file)
+        println("Saved: ", abs_path(filename))
+    end
+    return result
 end
 
-validate_density(up0, down0, L, N_up, N_down)
-result = solve_uhf(up0, down0, N_up, N_down;
-                   t=t, U=U, mixing=mixing, tol=tol, maxiter=maxiter)
+function main()
+    mkpath(dirname(abs_path(report_file)))
+    open(abs_path(report_file), "w") do report_io
+        run_calculation(report_io)
+    end
+end
 
-@printf("\nN_up=%d N_down=%d  N_total=%d\n", N_up, N_down, N_up+N_down)
-@printf("iterations=%d  residual=%.3e  E=%.12f\n",
-        result.iterations, result.residual, result.energy)
-@printf("E_kin=%.12f  E_int=%.12f\n", result.E_kin, result.E_int)
-@printf("sum(up)=%.10f  sum(down)=%.10f\n", sum(result.n_up), sum(result.n_down))
-
-save_density(abs_path(output_csv), result.n_up, result.n_down)
-save_plots(result;
-    energy_path=abs_path(energy_plot_file),
-    residual_path=abs_path(residual_plot_file),
-    density_path=abs_path(density_plot_file),
-    mag_path=abs_path(mag_plot_file),
-)
-
-println("Saved: ", abs_path(output_csv))
-println("Saved: ", abs_path(energy_plot_file))
-println("Saved: ", abs_path(residual_plot_file))
-println("Saved: ", abs_path(density_plot_file))
-println("Saved: ", abs_path(mag_plot_file))
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end
