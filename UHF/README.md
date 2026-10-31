@@ -3,6 +3,24 @@
 `uhf.jl`冒頭の計算設定・初期密度を編集し、`julia uhf.jl`で実行します。
 既存のJulia環境の`Plots`を使用します。
 
+## 粒子数と境界条件
+
+`L`はサイト数です。`N_up`と`N_down`をそれぞれ0～`L`の整数で独立に指定します。
+half-filling（`N_up + N_down == L`）の制約はありません。
+初期密度は各スピンの総和が指定した粒子数と一致する必要があります。
+manualの初期密度は、奇数サイト数でも指定粒子数を保つ交互変調を用います。
+
+```julia
+L = 50
+N_up = 25
+N_down = 20
+boundary = "OBC"  # "PBC": 周期的境界条件、"OBC": 開放境界条件
+```
+
+`"PBC"`では末端サイト間にもホッピング`-t`を設定し、`"OBC"`では接続しません。
+1サイトでは自己ホッピングを追加せず、2サイトでは同じ結合を二重に数えません。
+`solve_uhf`でもキーワード引数`boundary`で指定できます（既定値は`"OBC"`）。
+
 ## 出力
 
 `uhf.jl`冒頭の`result_dir_name`で保存先を切り替えます。
@@ -38,7 +56,7 @@ result_dir_name = "反強磁性"    # 保存用: results_vault/反強磁性/
 | `final_magnetization.png` | サイト別磁化 |
 | `uhf_results.txt` | 初期条件・反復履歴・最終結果（UTF-8） |
 
-`uhf_results.txt`の冒頭には、「パラメータ」の`L`、`t`、`U`、`m`、`N_up`、`N_down`と、
+`uhf_results.txt`の冒頭には、「パラメータ」の`L`、`t`、`U`、`N_up`、`N_down`、`boundary`と、
 「計算の設定」の`mixing`、`tol`、`maxiter`を実行時の値で記録します。
 初期電子密度については`initial_mode`に加え、manualでは`uhf.jl`内のmanual分岐のコードを
 コメントも含めて記録します。loadでは実際に読み込むCSVの、実行ディレクトリからの相対パスを記録します。
@@ -56,3 +74,4 @@ result_dir_name = "反強磁性"    # 保存用: results_vault/反強磁性/
 一時ディレクトリに入力CSVを作成し、指定パスの読み込み、初期条件・結果の記録、
 収束時・未収束時のCSVとPNG保存、入力ファイル不在時のエラーを検証します。
 既存の計算結果や`uhf.jl`の設定値は書き換えません。
+half-filling以外の粒子数、PBC/OBCの非相互作用での固有値、境界条件の記録も検証します。

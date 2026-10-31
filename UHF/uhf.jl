@@ -4,16 +4,17 @@ using Printf
 using Plots
 
 # =============== 計算設定（ここを編集） ===============
+
 # パラメータ
-L = 50                # 電子数
+L = 50                # サイト数
 t = 1.0                # ホッピング積分
 U = 4.0               # オンサイト相互作用
-m = 25                # N_up=m, N_down=L-m （0 <= m <= L）
-N_up = m
-N_down = L - m
+N_up = 25             # 0 <= N_up <= L
+N_down = 25           # 0 <= N_down <= L
+boundary = "OBC"      # "PBC": 周期的境界条件、"OBC": 開放境界条件
 
 # ファイルの扱い
-initial_mode = :load  # :manual か :load を選ぶ
+initial_mode = :manual  # :manual か :load を選ぶ
 input_csv = "results_vault/反強磁性/density_checkpoint.csv"    # pathは相対pathで入力
 output_csv = "density_checkpoint.csv"
 result_dir_name = nothing
@@ -53,8 +54,8 @@ end
 
 function write_initial_conditions(report_io)
     println(report_io, "# パラメータ")
-    for (name, value) in (("L", L), ("t", t), ("U", U), ("m", m),
-                          ("N_up", N_up), ("N_down", N_down))
+    for (name, value) in (("L", L), ("t", t), ("U", U),
+                          ("N_up", N_up), ("N_down", N_down), ("boundary", boundary))
         println(report_io, name, " = ", repr(value))
     end
     println(report_io, "\n# 計算の設定")
@@ -134,11 +135,11 @@ function hf_energy(h0, U, eig_up, eig_down, dens_up, dens_down, input_up, input_
 end
 
 function solve_uhf(up_init, down_init, N_up, N_down;
-                   t=1.0, U=4.0, mixing=0.25, tol=1e-10, maxiter=10_000,
+                   t=1.0, U=4.0, boundary="OBC", mixing=0.25, tol=1e-10, maxiter=10_000,
                    report_io=nothing)
     L = length(up_init)
+    boundary in ("PBC", "OBC") || error("boundaryは\"PBC\"または\"OBC\"にしてください")
     0 <= N_up <= L && 0 <= N_down <= L || error("各スピンの粒子数は0～L")
-    N_up + N_down == L || error("half-fillingはN_up+N_down=L")
     0 < mixing <= 1 || error("mixingは0より大きく1以下")
     tol > 0 && maxiter >= 1 || error("tol、maxiterを確認してください")
     up = Float64.(up_init)
@@ -149,6 +150,10 @@ function solve_uhf(up_init, down_init, N_up, N_down;
     for i in 1:L-1
         h0[i, i+1] = -t
         h0[i+1, i] = -t
+    end
+    if boundary == "PBC" && L > 2
+        h0[1, L] = -t
+        h0[L, 1] = -t
     end
 
     iter_hist = Int[]
@@ -235,17 +240,18 @@ end
 
 # =============== 実行部分：最初にif文で入力方法を選ぶ ===============
 function run_calculation(report_io)
-    0 <= m <= L || error("mは0～Lにしてください")
     write_initial_conditions(report_io)
 
     if initial_mode == :manual
-        # 手動指定：以下の2配列を任意の形に変更できます。
+        # 手動指定
         
         up_base = N_up / L
         down_base = N_down / L
         amplitude = 0.2 * min(up_base, 1-up_base, down_base, 1-down_base)
-        up0 = [up_base + amplitude * (-1)^i for i in 1:L]
-        down0 = [down_base - amplitude * (-1)^i for i in 1:L]
+        staggered = Float64[(-1)^site for site in 1:L]
+        staggered .-= sum(staggered) / L
+        up0 = up_base .+ amplitude .* staggered
+        down0 = down_base .- amplitude .* staggered
         
         #up0[5:30], down0[5:30] =copy(down0[5:30]), copy(up0[5:30])
 
@@ -260,7 +266,7 @@ function run_calculation(report_io)
 
     validate_density(up0, down0, L, N_up, N_down)
     result = solve_uhf(up0, down0, N_up, N_down;
-                       t=t, U=U, mixing=mixing, tol=tol, maxiter=maxiter,
+                       t=t, U=U, boundary=boundary, mixing=mixing, tol=tol, maxiter=maxiter,
                        report_io=report_io)
 
     print_result(@sprintf("\nN_up=%d N_down=%d  N_total=%d\n", N_up, N_down, N_up+N_down), report_io)
