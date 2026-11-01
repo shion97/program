@@ -1,0 +1,62 @@
+[
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 0.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 1,
+    "residual": 0.0,
+    "energy": -62.945484560518,
+    "kinetic": -62.945484560518,
+    "interaction": 0.0,
+    "ok": true,
+    "qmin": 0.9999999999999803,
+    "qmax": 1.0000000000000189,
+    "meanabs": 0.0,
+    "staggered": 0.0,
+    "double": 0.25,
+    "sums": [
+      24.999999999999996,
+      24.999999999999996
+    ],
+    "first": -62.945484560518,
+    "last_step": null,
+    "source": "results_vault\\experiment_01\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 0.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 1,
+    "residual": 0.0,
+    "energy": -63.703884439635,
+    "kinetic": -63.703884439635,
+    "interaction": 0.0,
+    "ok": true,
+    "qmin": 0.999999999999989,
+    "qmax": 1.000000000000013,
+    "meanabs": 0.0,
+    "staggered": 0.0,
+    "double": 0.25000000000000006,
+    "sums": [
+      25.000000000000014,
+      25.000000000000014
+    ],
+    "first": -63.703884439635,
+    "last_step": null,
+    "source": "results_vault\\experiment_01\\PBC"
+  }
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.1,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 329,
+    "residual": 3.401e-11,
+    "energy": -23.013070703721,
+    "kinetic": -43.110712440582,
+    "interaction": 20.097641736861,
+    "ok": true,
+    "qmin": 0.9999999999999811,
+    "qmax": 1.000000000000019,
+    "meanabs": 0.7730505603776162,
+    "staggered": 0.7730505603776162,
+    "double": 0.10048820868430484,
+    "sums": [
+      24.999999999999996,
+      25.0
+    ],
+    "first": -17.140038069337,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_07\\mixing_010\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.1,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 329,
+    "residual": 3.399e-11,
+    "energy": -23.455261994548,
+    "kinetic": -43.889991764426,
+    "interaction": 20.434729769878,
+    "ok": true,
+    "qmin": 0.9999999999999921,
+    "qmax": 1.000000000000015,
+    "meanabs": 0.7689638512976034,
+    "staggered": 0.7689638512976034,
+    "double": 0.10217364884938926,
+    "sums": [
+      24.99999999999999,
+      25.0
+    ],
+    "first": -17.699645447969,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_07\\mixing_010\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 126,
+    "residual": 3.266e-11,
+    "energy": -23.013070703721,
+    "kinetic": -43.11071244047,
+    "interaction": 20.097641736749,
+    "ok": true,
+    "qmin": 0.999999999999973,
+    "qmax": 1.0000000000000244,
+    "meanabs": 0.7730505603790628,
+    "staggered": 0.7730505603790628,
+    "double": 0.1004882086837474,
+    "sums": [
+      25.0,
+      25.000000000000004
+    ],
+    "first": -17.140038069337,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_07\\mixing_025\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 126,
+    "residual": 3.263e-11,
+    "energy": -23.455261994548,
+    "kinetic": -43.889991764312,
+    "interaction": 20.434729769764,
+    "ok": true,
+    "qmin": 0.9999999999999961,
+    "qmax": 1.0000000000000036,
+    "meanabs": 0.7689638512990787,
+    "staggered": 0.7689638512990787,
+    "double": 0.10217364884882203,
+    "sums": [
+      25.000000000000004,
+      24.999999999999993
+    ],
+    "first": -17.699645447969,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_07\\mixing_025\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.5,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 58,
+    "residual": 3.081e-11,
+    "energy": -23.013070703721,
+    "kinetic": -43.110712440315,
+    "interaction": 20.097641736594,
+    "ok": true,
+    "qmin": 0.9999999999999805,
+    "qmax": 1.0000000000000269,
+    "meanabs": 0.7730505603810751,
+    "staggered": 0.7730505603810751,
+    "double": 0.1004882086829722,
+    "sums": [
+      25.0,
+      25.0
+    ],
+    "first": -17.140038069337,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_07\\mixing_050\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.5,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 58,
+    "residual": 3.08e-11,
+    "energy": -23.455261994548,
+    "kinetic": -43.889991764158,
+    "interaction": 20.43472976961,
+    "ok": true,
+    "qmin": 0.9999999999999897,
+    "qmax": 1.0000000000000164,
+    "meanabs": 0.7689638513010886,
+    "staggered": 0.7689638513010886,
+    "double": 0.10217364884804932,
+    "sums": [
+      25.0,
+      24.99999999999999
+    ],
+    "first": -17.699645447969,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_07\\mixing_050\\PBC"
+  }
+]

@@ -1,0 +1,362 @@
+[
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 0.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 1,
+    "residual": 0.0,
+    "energy": -62.945484560518,
+    "kinetic": -62.945484560518,
+    "interaction": 0.0,
+    "ok": true,
+    "qmin": 0.9999999999999803,
+    "qmax": 1.0000000000000189,
+    "meanabs": 0.0,
+    "staggered": 0.0,
+    "double": 0.25,
+    "sums": [
+      24.999999999999996,
+      24.999999999999996
+    ],
+    "first": -62.945484560518,
+    "last_step": null,
+    "source": "results_vault\\experiment_08\\U00\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 0.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 1,
+    "residual": 0.0,
+    "energy": -63.703884439635,
+    "kinetic": -63.703884439635,
+    "interaction": 0.0,
+    "ok": true,
+    "qmin": 0.999999999999989,
+    "qmax": 1.000000000000013,
+    "meanabs": 0.0,
+    "staggered": 0.0,
+    "double": 0.25000000000000006,
+    "sums": [
+      25.000000000000014,
+      25.000000000000014
+    ],
+    "first": -63.703884439635,
+    "last_step": null,
+    "source": "results_vault\\experiment_08\\U00\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 1.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 1174,
+    "residual": 9.287e-11,
+    "energy": -50.445484560518,
+    "kinetic": -62.945484560518,
+    "interaction": 12.5,
+    "ok": true,
+    "qmin": 0.9999999999999851,
+    "qmax": 1.0000000000000138,
+    "meanabs": 1.6508042310903193e-09,
+    "staggered": 1.6508042310903193e-09,
+    "double": 0.25,
+    "sums": [
+      24.999999999999996,
+      24.99999999999999
+    ],
+    "first": -50.380098183156,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U01\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 1.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 302,
+    "residual": 7.282e-11,
+    "energy": -51.203884439635,
+    "kinetic": -63.703884439635,
+    "interaction": 12.5,
+    "ok": true,
+    "qmin": 0.9999999999999896,
+    "qmax": 1.0000000000000033,
+    "meanabs": 4.438169509679568e-10,
+    "staggered": 4.438169509679568e-10,
+    "double": 0.24999999999999997,
+    "sums": [
+      25.0,
+      25.0
+    ],
+    "first": -51.111304048964,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U01\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 2.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 231,
+    "residual": 6.466e-11,
+    "energy": -38.473639256258,
+    "kinetic": -60.352685643363,
+    "interaction": 21.879046387106,
+    "ok": true,
+    "qmin": 0.9999999999999828,
+    "qmax": 1.000000000000013,
+    "meanabs": 0.3508538303484769,
+    "staggered": 0.3508538303484769,
+    "double": 0.21879046387105722,
+    "sums": [
+      25.000000000000007,
+      25.000000000000007
+    ],
+    "first": -38.34060761867,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U02\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 2.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 232,
+    "residual": 6.429e-11,
+    "energy": -39.129375642036,
+    "kinetic": -61.233052176765,
+    "interaction": 22.103676534729,
+    "ok": true,
+    "qmin": 0.9999999999999932,
+    "qmax": 1.0000000000000058,
+    "meanabs": 0.34037176529618157,
+    "staggered": 0.34037176529618157,
+    "double": 0.22103676534729033,
+    "sums": [
+      24.999999999999996,
+      25.000000000000004
+    ],
+    "first": -39.02402109843,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U02\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 126,
+    "residual": 3.266e-11,
+    "energy": -23.013070703721,
+    "kinetic": -43.11071244047,
+    "interaction": 20.097641736749,
+    "ok": true,
+    "qmin": 0.999999999999973,
+    "qmax": 1.0000000000000244,
+    "meanabs": 0.7730505603790628,
+    "staggered": 0.7730505603790628,
+    "double": 0.1004882086837474,
+    "sums": [
+      25.0,
+      25.000000000000004
+    ],
+    "first": -17.140038069337,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U04\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 4.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 126,
+    "residual": 3.263e-11,
+    "energy": -23.455261994548,
+    "kinetic": -43.889991764312,
+    "interaction": 20.434729769764,
+    "ok": true,
+    "qmin": 0.9999999999999961,
+    "qmax": 1.0000000000000036,
+    "meanabs": 0.7689638512990787,
+    "staggered": 0.7689638512990787,
+    "double": 0.10217364884882203,
+    "sums": [
+      25.000000000000004,
+      24.999999999999993
+    ],
+    "first": -17.699645447969,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U04\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 6.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 100,
+    "residual": 1.656e-11,
+    "energy": -15.889386927497,
+    "kinetic": -30.893885898903,
+    "interaction": 15.004498971406,
+    "ok": true,
+    "qmin": 0.9999999999999578,
+    "qmax": 1.0000000000000473,
+    "meanabs": 0.8943350101561012,
+    "staggered": 0.8943350101561012,
+    "double": 0.05001499657135286,
+    "sums": [
+      25.0,
+      25.000000000000007
+    ],
+    "first": -0.293400339621,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U06\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 6.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 100,
+    "residual": 1.651e-11,
+    "energy": -16.204768818174,
+    "kinetic": -31.489976384644,
+    "interaction": 15.28520756647,
+    "ok": true,
+    "qmin": 0.9999999999999923,
+    "qmax": 1.0000000000000098,
+    "meanabs": 0.8922988470501722,
+    "staggered": 0.8922988470501722,
+    "double": 0.05095069188823339,
+    "sums": [
+      25.000000000000007,
+      24.999999999999993
+    ],
+    "first": -0.685144381777,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U06\\PBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 8.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 91,
+    "residual": 9.229e-12,
+    "energy": -12.062513393298,
+    "kinetic": -23.750350860023,
+    "interaction": 11.687837466725,
+    "ok": true,
+    "qmin": 0.9999999999999375,
+    "qmax": 1.0000000000000437,
+    "meanabs": 0.9397268217072332,
+    "staggered": 0.9397268217072332,
+    "double": 0.029219593666812295,
+    "sums": [
+      24.999999999999996,
+      24.999999999999993
+    ],
+    "first": 12.437334537323,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U08\\OBC"
+  },
+  {
+    "params": {
+      "L": 50.0,
+      "t": 1.0,
+      "U": 8.0,
+      "N_up": 25.0,
+      "N_down": 25.0,
+      "mixing": 0.25,
+      "tol": 1e-10,
+      "maxiter": 10000.0
+    },
+    "iterations": 91,
+    "residual": 9.162e-12,
+    "energy": -12.304830272507,
+    "kinetic": -24.219891068954,
+    "interaction": 11.915060796446,
+    "ok": true,
+    "qmin": 0.9999999999999969,
+    "qmax": 1.0000000000000038,
+    "meanabs": 0.9385357702482815,
+    "staggered": 0.9385357702482815,
+    "double": 0.029787651991116194,
+    "sums": [
+      25.000000000000007,
+      25.0
+    ],
+    "first": 12.225895498947,
+    "last_step": 0.0,
+    "source": "results_vault\\experiment_08\\U08\\PBC"
+  }
+]

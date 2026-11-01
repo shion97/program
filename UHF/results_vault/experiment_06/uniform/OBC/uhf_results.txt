@@ -1,0 +1,26 @@
+# パラメータ
+L = 50
+t = 1.0
+U = 4.0
+N_up = 25
+N_down = 25
+boundary = "OBC"
+
+# 計算の設定
+mixing = 0.25
+tol = 1.0e-10
+maxiter = 10000
+
+# 初期電子密度
+initial_mode = :manual
+up0 = fill(N_up / L, L)
+down0 = fill(N_down / L, L)
+
+# 計算結果
+iter=    1  residual=1.155e-14  E=-12.945484560518  E_kin=-62.945484560518  E_int=50.000000000000
+
+N_up=25 N_down=25  N_total=50
+converged=true
+iterations=1  residual=1.887e-14  E=-12.945484560518
+E_kin=-62.945484560518  E_int=50.000000000000
+sum(up)=25.0000000000  sum(down)=25.0000000000
