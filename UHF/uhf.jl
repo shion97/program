@@ -9,8 +9,8 @@ using Plots
 L = 50                # サイト数
 t = 1.0                # ホッピング積分
 U = 4.0               # オンサイト相互作用
-N_up = 25             # 0 <= N_up <= L
-N_down = 25           # 0 <= N_down <= L
+N_up = 24             # 0 <= N_up <= L
+N_down = 24           # 0 <= N_down <= L
 boundary = "OBC"      # "PBC": 周期的境界条件、"OBC": 開放境界条件
 
 # ファイルの扱い
