@@ -1,4 +1,4 @@
-UHF/outputs/
+*/outputs/
 UHF_soliton/outputs/
 seminar1/
 seminar2/
@@ -7,3 +7,4 @@ seminar5/
 test/
 AGENTS.md
 UHF/report/_work
+UHF_soliton_BC

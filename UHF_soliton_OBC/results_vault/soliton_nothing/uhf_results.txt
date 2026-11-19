@@ -23,7 +23,7 @@ staggered .-= sum(staggered) / L
 up0 = up_base .+ amplitude .* staggered
 down0 = down_base .- amplitude .* staggered
 
-# 反転なし
+#up0[3:6], down0[3:6] =copy(down0[3:6]), copy(up0[3:6])
 
 
 # 計算結果

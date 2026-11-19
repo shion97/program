@@ -25,7 +25,7 @@ boundary = "PBC"      # "PBC": 周期的境界条件、"OBC": 開放境界条件
 initial_mode = :manual  # :manual か :load を選ぶ
 input_csv = "results_vault/反強磁性/density_checkpoint.csv"    # pathは相対pathで入力
 output_csv = "density_checkpoint.csv"
-result_dir_name = "soliton_3-6"
+result_dir_name = "soliton_nothing"
 
 # 計算の設定
 mixing = 0.25   # 密度混合割合
@@ -307,7 +307,7 @@ function run_calculation(report_io)
         up0 = up_base .+ amplitude .* staggered
         down0 = down_base .- amplitude .* staggered
         
-        up0[3:6], down0[3:6] =copy(down0[3:6]), copy(up0[3:6])
+        #up0[3:26], down0[3:26] =copy(down0[3:26]), copy(up0[3:26])
 
     elseif initial_mode == :load
         up0, down0 = load_density(abspath(input_csv), L)
