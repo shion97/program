@@ -41,10 +41,11 @@ final_density_plot_file = "final_density_magnetization.png"
 staggered_plot_file = "staggered_magnetization.png"
 report_file = "uhf_results.txt"
 
-# 反強磁性な状態のエネルギー(OBC)
-E_compared=-23.013070703721
-E_kin_compared=-43.110713154683 
-E_int_compared=20.097642450963
+# 位相欠陥なしの results_vault/soliton_nothing/uhf_results.txt の最終集計を参照。
+# OBC、mixing=0.25、tol=1e-8 で得た、表示用に丸める前の値。
+E_compared=-23.01307070372055
+E_kin_compared=-43.11071268975617
+E_int_compared=20.09764198603562
 # ===========================================
 
 # =============== 入出力用補助 ===============
