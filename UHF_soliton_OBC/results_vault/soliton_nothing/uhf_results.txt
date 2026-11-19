@@ -132,5 +132,5 @@ N_up=25 N_down=25  N_total=50
 converged=true
 iterations=100  residual=3.215e-09  E=-23.013070703721
 E_kin=-43.110712689756  E_int=20.097641986036
-delta_E=0.000000000000  delta_E_kin=0.000000464927  delta_E_int=-0.000000464927
+delta_E=0.000000000000  delta_E_kin=0.000000000000  delta_E_int=0.000000000000
 sum(up)=25.0000000000  sum(down)=25.0000000000

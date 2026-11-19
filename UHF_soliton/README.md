@@ -92,11 +92,10 @@ site,n_up,n_down
 | `final_density_magnetization.png` | 最終状態の電子密度（上段）と局所磁化（下段）。初期状態と同じ形式で表示 |
 | `staggered_magnetization.png` | サイトごとのスタッガード磁化`(-1)^i * (n_up[i] - n_down[i])`を比較。initialは灰色点線、finalはオレンジ実線 |
 
-端末と`uhf_results.txt`の最終結果には、反強磁性状態とのエネルギー差を小数点以下12桁で出力します。
+端末と`uhf_results.txt`では、各反復と最終集計の全・運動・相互作用エネルギー、および最終集計のエネルギー差を、元の Float64 値に読み戻せる桁数で出力します。
 `delta_E = E - E_compared`、`delta_E_kin = E_kin - E_kin_compared`、
 `delta_E_int = E_int - E_int_compared`で、正なら参照状態より高い値です。未収束時も最後に再評価した結果との差を出力します。
-参照値は`uhf.jl`の`E_compared = -23.455261994548`、`E_kin_compared = -43.889992525230`、
-`E_int_compared = 20.434730530683`を使います。計算条件を変更する場合は、比較対象の条件と参照値も確認してください。
+参照値は、PBC の位相欠陥なし状態 `soliton_nothing` を混合率 0.25 と収束閾値 1e-8 で計算した最終集計値です。
 
 スタッガード磁化はサイト番号`i=1`からの`(-1)^i`を用い、既存の局所磁化と同じ規約で1/2を掛けません。manual・loadのいずれでも、SCF更新前の初期密度と最終密度を重ねて表示します。
 

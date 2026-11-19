@@ -187,7 +187,7 @@ function solve_uhf(up_init, down_init, N_up, N_down;
         push!(energy_hist, E_total)
 
         iterations = k
-        print_result(@sprintf("iter=%5d  residual=%.3e  E=%.12f  E_kin=%.12f  E_int=%.12f\n",
+        print_result(@sprintf("iter=%5d  residual=%.3e  E=%s  E_kin=%s  E_int=%s\n",
                               k, residual, E_total, E_kin, E_int), report_io)
 
         if residual < tol
@@ -326,10 +326,10 @@ function run_calculation(report_io)
     if !result.converged
         print_result("SCFは最大反復回数に達しても未収束です。最後の混合密度から再評価した結果を保存します。\n", report_io)
     end
-    print_result(@sprintf("iterations=%d  residual=%.3e  E=%.12f\n",
+    print_result(@sprintf("iterations=%d  residual=%.3e  E=%s\n",
                          result.iterations, result.residual, result.energy), report_io)
-    print_result(@sprintf("E_kin=%.12f  E_int=%.12f\n", result.E_kin, result.E_int), report_io)
-    print_result(@sprintf("delta_E=%.12f  delta_E_kin=%.12f  delta_E_int=%.12f\n",
+    print_result(@sprintf("E_kin=%s  E_int=%s\n", result.E_kin, result.E_int), report_io)
+    print_result(@sprintf("delta_E=%s  delta_E_kin=%s  delta_E_int=%s\n",
                          result.energy - E_compared, result.E_kin - E_kin_compared,
                          result.E_int - E_int_compared), report_io)
     print_result(@sprintf("sum(up)=%.10f  sum(down)=%.10f\n", sum(result.n_up), sum(result.n_down)), report_io)
