@@ -42,7 +42,7 @@ staggered_plot_file = "staggered_magnetization.png"
 report_file = "uhf_results.txt"
 
 # 位相欠陥なしの results_vault/soliton_nothing/uhf_results.txt の最終集計を参照。
-# PBC、mixing=0.25、tol=1e-8 で得た、表示用に丸める前の値。
+# PBC、mixing=0.25、tol=1e-8 で得た結果
 E_compared=-23.45526199454771
 E_kin_compared=-43.88999203084567
 E_int_compared=20.43473003629796
